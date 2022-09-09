@@ -102,7 +102,7 @@ pub mod cortex_m0p {
         /// which is enforced even for privileged code.
         pub fn configure_unprivileged(
             &mut self,
-            regions: &ArrayVec<[Region; Self::REGION_COUNT_USIZE]>,
+            regions: &ArrayVec<Region, { Self::REGION_COUNT_USIZE }>,
         ) {
             // Safety: This is safe because it does not affect the privileged code calling it.
             // Unprivileged, untrusted (non-Rust) code is always unsafe to call, so this doesn't
@@ -155,7 +155,7 @@ pub mod cortex_m0p {
         /// Code will only be allowed to access memory inside one of the given `regions`.
         pub fn configure(
             &mut self,
-            regions: &ArrayVec<[Region<FullAccessPermissions>; Self::REGION_COUNT_USIZE]>,
+            regions: &ArrayVec<Region<FullAccessPermissions>, { Self::REGION_COUNT_USIZE }>,
         ) {
             update_mpu(&mut self.0, |mpu| {
                 for (i, region) in regions.iter().enumerate() {
@@ -310,7 +310,7 @@ pub mod cortex_m4 {
         /// Code running in privileged mode will not be restricted by the MPU.
         pub fn configure_unprivileged(
             &mut self,
-            regions: &ArrayVec<[Region; Self::REGION_COUNT_USIZE]>,
+            regions: &ArrayVec<Region, { Self::REGION_COUNT_USIZE }>,
         ) {
             // Safety: This is safe because it does not affect the privileged code calling it.
             // Unprivileged, untrusted (non-Rust) code is always unsafe to call, so this doesn't
@@ -365,7 +365,7 @@ pub mod cortex_m4 {
         /// will occur.
         pub fn configure(
             &mut self,
-            regions: &ArrayVec<[Region<FullAccessPermissions>; Self::REGION_COUNT_USIZE]>,
+            regions: &ArrayVec<Region<FullAccessPermissions>, { Self::REGION_COUNT_USIZE }>,
         ) {
             update_mpu(&mut self.0, |mpu| {
                 for (i, region) in regions.iter().enumerate() {
